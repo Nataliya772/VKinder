@@ -45,13 +45,11 @@ class UserVK():
 
 
     def get_user_id(self) -> int:
-        user_info = self.get_user_info()
-        self.user_id = user_info['id']
+        self.user_id = self.user['id']
         return self.user_id
 
     def get_user_name(self) -> str:
-        user_info = self.get_user_info()
-        self.user_name = user_info['first_name'] + '_' + user_info['last_name']
+        self.user_name = self.user['first_name'] + '_' + self.user['last_name']
         return self.user_name
 
     def get_all_countries(self) -> list:
@@ -70,9 +68,9 @@ class UserVK():
 
     def get_id_user_country(self) -> int:
         try:
-            user_info = self.get_user_info()
-            if user_info['country']['id'] > 0:
-                self.country_id = user_info['country']['id']
+            #user_info = self.get_user_info()
+            if self.user['country']['id'] > 0:
+                self.country_id = self.user['country']['id']
             else:
                 us_country = input('Укажите страну проживания: ')
                 for country in self.get_all_countries:
@@ -98,8 +96,8 @@ class UserVK():
 
     def get_id_user_city(self) -> int:
         user_info = self.get_user_info()
-        if user_info['city']['id'] > 0:
-            self.city_id = user_info['city']['id']
+        if self.user['city']['id'] > 0:
+            self.city_id = self.user['city']['id']
         else:
             us_city = input('Укажите город проживания: ')
             for cities in self.get_all_cities:
@@ -110,12 +108,11 @@ class UserVK():
         return self.city_id
 
     def get_bdate_user(self) -> str:
-        user_info = self.get_user_info()
         try:
-            if user_info['bdate'] == '0.0.0':
+            if  self.user['bdate'] == '0.0.0':
                 self.bdate_user = input('Укажите дату вашего рождения строго в формате день.месяц.год (01.01.1990): ')
             else:
-                self.bdate_user = user_info['bdate']
+                self.bdate_user = self.user['bdate']
             return self.bdate_user
         except TypeError or ValueError as e:
             print(f'Проверьте корректность формата указанной даты, должен быть 00.00.0000 - {e}')
@@ -138,20 +135,19 @@ class UserVK():
             return f'Проверьте корректность формата указанной даты, должен быть 00.00.0000 - {e}'
 
     def get_sex_user(self) -> int:
-        user_info = self.get_user_info()
-        self.sex_user = user_info['sex']
+        self.sex_user = self.user['sex']
         return self.sex_user
 
 
 if __name__ == '__main__':
     User_1 = UserVK(TOKEN)
-    #print(User_1.get_user_info())
-    #print(User_1.country_id)
+    print(User_1.get_user_info())
+    #print(User_1.get_user_id())
+    #print(User_1.get_user_name())
     #print(User_1.get_id_user_country())
-    #print(User_1.country_id)
+    #print(User_1.get_id_user_city())
     #print(User_1.get_all_countries())
     #print(User_1.get_all_cities())
-    #print(User_1.get_id_user_city())
     #print(User_1.city_id)
     #print(User_1.get_bdate_user())
     #print(User_1.get_age_user())

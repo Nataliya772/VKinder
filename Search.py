@@ -71,7 +71,6 @@ class SearchUsersVK():
     def get_users_with_foto(self) -> list:
         data = self.get_selected_users()
         users_with_foto = []
-        users_with_foto_1_url =[]
         for user in data:
             dict_photo = {}
             par = self.get_params_for_search()
@@ -109,7 +108,6 @@ class SearchUsersVK():
                 #for key, value in us.items():
                     #for val in value:
                         #print(val)
-
         return users_with_foto
 
 
