@@ -85,7 +85,7 @@ class SearchUsersVK():
                 'https://api.vk.com/method/photos.get',
                 params
             )
-            time.sleep(1)
+            time.sleep(0.34)
             respons = respons.json()['response']['items']
             list_id_photo = self.get_3_photo(respons)
             #print(list_id_photo)
