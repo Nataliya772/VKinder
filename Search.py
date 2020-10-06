@@ -53,7 +53,7 @@ class SearchUsersVK():
         'https://api.vk.com/method/users.search',
         self.get_params_for_search()
         )
-        time.sleep(1)
+        time.sleep(0.34)
         return respons.json()
 
     def get_selected_users(self) -> list:

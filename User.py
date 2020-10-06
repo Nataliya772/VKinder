@@ -60,7 +60,7 @@ class UserVK():
                 'https://api.vk.com/method/database.getCountries',
                 params
             )
-            time.sleep(1)
+            time.sleep(0.34)
             return respons.json()['response']['items']
         except KeyError as e:
             print(f'Проблема с параметром access_token или подключение прервано, исключение {e}')
@@ -91,7 +91,7 @@ class UserVK():
         'https://api.vk.com/method/database.getCities',
         params
         )
-        time.sleep(1)
+        time.sleep(0.34)
         return respons.json()['response']['items']
 
     def get_id_user_city(self) -> int:
