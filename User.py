@@ -95,7 +95,7 @@ class UserVK():
         return respons.json()['response']['items']
 
     def get_id_user_city(self) -> int:
-        user_info = self.get_user_info()
+        #user_info = self.get_user_info()
         if self.user['city']['id'] > 0:
             self.city_id = self.user['city']['id']
         else:

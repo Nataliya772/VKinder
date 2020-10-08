@@ -27,12 +27,12 @@ class SearchUsersVK():
         age_user = 0
         sex_user = 0
         for user in self._user:
-            city_id = user.__dict__['city_id']
-            country_id = user.__dict__['country_id']
-            age_user = user.__dict__['age_user']
-            if user.__dict__['sex_user'] == 2:
+            city_id = user.city_id
+            country_id = user.country_id
+            age_user = user.age_user
+            if user.sex_user == 2:
                 sex_user = 1
-            elif user.__dict__['sex_user'] == 1:
+            elif user.sex_user == 1:
                 sex_user = 2
             #print(user.__dict__)
         return {
