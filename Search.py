@@ -10,7 +10,6 @@ class SearchUsersVK():
 
 
     def _get_user(self, user) -> list:
-        user.get_user_info()
         user.get_id_user_country()
         user.get_id_user_city()
         user.get_bdate_user()
@@ -117,7 +116,8 @@ class SearchUsersVK():
         list_id_photo = []
         for resp in data:
             #print(resp)
-            dict.setdefault(resp['id'], (resp['likes']['count'] + resp['comments']['count']))
+            dict[resp['id']] = resp['likes']['count'] + resp['comments']['count']
+            #dict.setdefault(resp['id'], (resp['likes']['count'] + resp['comments']['count']))
         #print(dict)
         sort_dict = sorted(dict.items(), key=lambda x: x[1], reverse=True)
         #print(sort_dict)
@@ -136,7 +136,7 @@ if __name__ == '__main__':
     #search_for_user.get_params_for_search()
     #print(search_for_user.search_users())
     #search_for_user.get_selected_users()
-    search_for_user.get_users_with_foto()
+    #print(search_for_user.get_users_with_foto())
     #search_for_user.get_3_foto()
     #for us in search_for_user._user:
         #print(us.__dict__)

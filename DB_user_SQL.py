@@ -10,7 +10,7 @@ search_for_user._get_user(UserVK(TOKEN))
 
 db_name = 'str'
 for us in search_for_user._user:
-        db_name = us.__dict__['user_name'] + '_id_' + str(us.__dict__['user_id'])
+        db_name = us.user_name + '_id_' + str(us.user_id)
 
 print(f'Поиск для пользователя VK {db_name}')
 #['id']['first_name']['last_name']['link']['top_3_photo']:[{[{
@@ -37,11 +37,6 @@ def create_db():
             Photos_id integer references Photos(id));
             ''')
 
-        #cur.execute('''select id from Users;''')
-        #id_in_db = cur.fetchall()
-        #for id in id_in_db:
-            #db_id = id[0]
-
         list_us = search_for_user.get_users_with_foto()
         for user in list_us:
             if user['id'] == '':
@@ -50,7 +45,6 @@ def create_db():
                 cur.execute('''
                     insert into Users(id, name, link) values (%s, %s, %s);
                     ''', (user['id'], user['first_name'] + '_' + user['last_name'], user['link']))
-# select * from Users where if not exists id = %s; (user['id'],);
 
             for photo in user['top_3_photo']:
                 for key, value in photo.items():
@@ -72,10 +66,9 @@ with pg.connect(database='test_DB_user', user='postgres', password='tvoug13777T'
     port='5432') as conn:
     cur = conn.cursor()
 
-def drop_bd():
-    cur.execute('''
-    drop table User_Photo, Photos, Users
-    ''')
+    #cur.execute('''
+    #drop table User_Photo, Photos, Users
+    #''')
 
 def get_user_whith_photo(request_number):
     if request_number == 1:
@@ -126,9 +119,8 @@ if __name__ == '__main__':
 # при повторном запросе, что логично, ошибка ключа, но нужно же ее как-то обновлять, нужна одельая функция на обовление?
 # psycopg2.errors.UniqueViolation: ОШИБКА:  повторяющееся значение ключа нарушает ограничение уникальности "users_pkey"
 # DETAIL:  Ключ "(id)=(125606838)" уже существует.
-
     #get_users(2)
-    get_photo()
-    #get_user_whith_photo(2)
-    #file_write(1)
+    #get_photo()
+    #get_user_whith_photo(1)
+    file_write(1)
 

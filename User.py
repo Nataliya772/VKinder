@@ -13,7 +13,10 @@ class UserVK():
 
     def __init__(self, token: str) -> None:
         self.token = token
-        self.user = []
+        self.params = {'access_token': TOKEN, 'v': 5.89,}
+        self.user = requests.get(
+            'https://api.vk.com/method/account.getProfileInfo',
+            self.params).json()['response']
         self.country_id = 0
         self.city_id = 0
         self.age_user = 0
@@ -21,27 +24,6 @@ class UserVK():
         self.bdate_user = 'str'
         self.user_id = 'int'
         self.user_name = 'str'
-
-
-    def get_params(self):
-        return {
-        'access_token': TOKEN,
-        'v': 5.89,
-    }
-
-
-    def get_user_info(self) -> dict:
-        try:
-            respons = requests.get(
-            'https://api.vk.com/method/account.getProfileInfo',
-            self.get_params()
-            )
-            time.sleep(1)
-            #print(respons.json()['response'])
-            self.user = respons.json()['response']
-            return respons.json()['response']
-        except KeyError as e:
-            print(f'Проблема с параметром access_token, исключение {e}')
 
 
     def get_user_id(self) -> int:
@@ -53,7 +35,7 @@ class UserVK():
         return self.user_name
 
     def get_all_countries(self) -> list:
-        params = self.get_params()
+        params = self.params
         params['need_all'] = 1
         try:
             respons = requests.get(
@@ -68,16 +50,16 @@ class UserVK():
 
     def get_id_user_country(self) -> int:
         try:
-            #user_info = self.get_user_info()
             if self.user['country']['id'] > 0:
                 self.country_id = self.user['country']['id']
             else:
                 us_country = input('Укажите страну проживания: ')
-                for country in self.get_all_countries:
+                for country in self.get_all_countries():
                     if us_country == country['title']:
                         self.country_id = country['id']
-                    elif us_country != country['title']:
-                        print('Такой страны нет в списке, проверьте корректность указанного названия')
+                        break
+                else:
+                    print('Такой страны нет в списке, проверьте корректность указанного названия')
             return self.country_id
         except KeyError as e:
             print(f'Проблема с параметром access_token или подключение прервано, исключение {e}')
@@ -85,7 +67,7 @@ class UserVK():
 
 
     def get_all_cities(self) -> list:
-        params = self.get_params()
+        params = self.params
         params['country_id'] = self.country_id
         respons = requests.get(
         'https://api.vk.com/method/database.getCities',
@@ -95,16 +77,16 @@ class UserVK():
         return respons.json()['response']['items']
 
     def get_id_user_city(self) -> int:
-        #user_info = self.get_user_info()
         if self.user['city']['id'] > 0:
             self.city_id = self.user['city']['id']
         else:
             us_city = input('Укажите город проживания: ')
-            for cities in self.get_all_cities:
+            for cities in self.get_all_cities():
                 if us_city == cities['title']:
                     self.self.city_id = cities['id']
-                elif us_city != cities['title']:
-                    print('Такого города нет в списке, проверьте корректность указанного названия')
+                    break
+            else:
+                print('Такого города нет в списке, проверьте корректность указанного названия')
         return self.city_id
 
     def get_bdate_user(self) -> str:
@@ -141,15 +123,15 @@ class UserVK():
 
 if __name__ == '__main__':
     User_1 = UserVK(TOKEN)
-    print(User_1.get_user_info())
+    #print(User_1.get_user_info())
     #print(User_1.get_user_id())
     #print(User_1.get_user_name())
-    #print(User_1.get_id_user_country())
+    print(User_1.get_id_user_country())
     #print(User_1.get_id_user_city())
     #print(User_1.get_all_countries())
-    #print(User_1.get_all_cities())
+    print(User_1.get_all_cities())
     #print(User_1.city_id)
     #print(User_1.get_bdate_user())
     #print(User_1.get_age_user())
     #print(User_1.get_sex_user())
-    print(User_1.__dict__)
+    print(User_1.user)

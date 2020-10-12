@@ -16,11 +16,7 @@ class TestAPI_User(unittest.TestCase):
     def setUp(self):
         TOKEN = '10b2e6b1a90a01875cfaa0d2dd307b7a73a15ceb1acf0c0f2a9e9c586f3b597815652e5c28ed8a1baf13c'
         self.user = User.UserVK(TOKEN)
-        self.user.get_params()
-        self.user.get_user_info()
 
-    def test_get_params(self):
-        self.assertTrue(self.user.user['id'])
 
     def test_get_user_id(self):
         self.user.get_user_id()
